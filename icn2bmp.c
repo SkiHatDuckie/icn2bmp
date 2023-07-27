@@ -45,7 +45,7 @@ void remove_extension(char *filename) {
 void create_bmp(int w, int h, size_t buf_size, unsigned char *data, char *filename) {
     char tag[] = { 'B', 'M' };
     int header[] = {
-        0x00,                // File size - TODO
+        0x00,                // File size
         0x00,                // Unused
         0x3e,                // Byte offset of pixel data
         0x28,                // Header size
@@ -57,7 +57,7 @@ void create_bmp(int w, int h, size_t buf_size, unsigned char *data, char *filena
         0x00, 0x00           // Color palette
     };
     int color_table[] = { 0xFFFFFF, 0x000000 };
-    header[0] = sizeof tag + sizeof header + sizeof color_table + sizeof data;
+    header[0] = sizeof tag + sizeof header + sizeof color_table + buf_size;
 
     FILE *file_ptr = fopen(strcat(filename, ".bmp"), "wb");
     fwrite(&tag, sizeof tag, 1, file_ptr);
